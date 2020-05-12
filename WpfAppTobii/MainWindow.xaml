@@ -25,13 +25,8 @@
             </Grid>
         </ControlTemplate>
         <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(local:Color.CustomBackground)}" />
             <Setter Property="Margin" Value="5 5 5 5"/>
-            <Style.Triggers>
-                <Trigger Property="tobii:Behaviors.HasGaze" Value="True">
-                    <Setter Property="Background" Value="LightGray" />
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Background" Value="Transparent"/>
         </Style>
 
 
@@ -41,6 +36,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -48,7 +47,25 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
+        <Image 
+            x:Name="Image"
+            Source="Zahn.jpg" 
+            Grid.Row="1"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+        />
+        <Image 
+            x:Name="ImageKorekt"
+            Source="ZahnKorrekt.png" 
+            Visibility="Hidden"
+        />
+        <Image 
+            x:Name="ImageFalsch"
+            Source="ZahnFalsch.png"
+            Visibility="Hidden"
+        />
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <StackPanel>
                 <Button tobii:Behaviors.IsGazeAware="True" 
                     x:Name="Button1"
@@ -86,6 +103,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource ButtonStyle}"
+                    local:Boolean.CorrectButton="True"
                 />
                 <Button tobii:Behaviors.IsGazeAware="True"  
                     x:Name="Button6"
@@ -121,7 +139,7 @@
         </StackPanel>
 
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <StackPanel>
                 <Button tobii:Behaviors.IsGazeAware="True"  
                     x:Name="Button10"
@@ -169,6 +187,7 @@
                     Width="100"
                     Height="50"
                     Style="{StaticResource ButtonStyle}"
+                    local:Boolean.CorrectButton="True"
                 />
                 <Button tobii:Behaviors.IsGazeAware="True"  
                     x:Name="Button15"
@@ -211,7 +230,7 @@
             </StackPanel>
         </StackPanel>
         
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
             <Button tobii:Behaviors.IsGazeAware="True"  
                     x:Name="Button19"
                     Content="Look at me"
@@ -229,6 +248,7 @@
                     Width="150"
                     Height="100"
                     Style="{StaticResource ButtonStyle}"
+                    local:Boolean.CorrectButton="True"
             />
             <Button tobii:Behaviors.IsGazeAware="True" 
                     x:Name="Button21"
@@ -238,12 +258,14 @@
                     Width="150"
                     Height="100"
                     Style="{StaticResource ButtonStyle}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
             />
         </StackPanel>
-    
-    
-    
-        <StackPanel Grid.Column="1" Grid.Row="0">
+
+
+
+        <StackPanel Grid.Column="4" Grid.Row="0" HorizontalAlignment="Right" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button 
                     x:Name="Button22"
@@ -301,6 +323,7 @@
                     local:Color.CustomStroke="Black"
                     local:Color.CustomBackground="Transparent"
                     tobii:Behaviors.IsGazeAware="True"  
+                    local:Boolean.CorrectButton="True"
                 />
                 <Button  
                     x:Name="Button27"
@@ -351,7 +374,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2">
             <Button 
                 x:Name="Button31"
                 Width="100" 
@@ -373,6 +396,7 @@
                 local:Color.CustomStroke="Black"
                 local:Color.CustomBackground="Transparent"
                 tobii:Behaviors.IsGazeAware="True"  
+                local:Boolean.CorrectButton="True"
             />
             <Button 
                 x:Name="Button33"
@@ -387,7 +411,7 @@
             />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="3">
             <Button
                 x:Name="Button34"
                 Width="150" 
@@ -409,6 +433,7 @@
                 local:Color.CustomStroke="Black"
                 local:Color.CustomBackground="Transparent"
                 tobii:Behaviors.IsGazeAware="True"  
+                local:Boolean.CorrectButton="True"
             />
             <Button
                 x:Name="Button36"

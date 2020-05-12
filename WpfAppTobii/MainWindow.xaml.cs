@@ -13,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Tobii.Interaction;
 using Tobii.Interaction.Wpf;
@@ -34,6 +35,9 @@ namespace WpfApp2
             addGazeHandlerToButtons();
 
             ButtonAnimation.initAnimation();
+            ImageDisplay.image = Image;
+            ImageDisplay.imageKorrekt = ImageKorekt;
+            ImageDisplay.imageFalsch = ImageFalsch;
         }
         private void addGazeHandlerToButtons()
         {
@@ -77,6 +81,10 @@ namespace WpfApp2
             foreach (Button button in buttons)
             {
                 button.AddHasGazeChangedHandler(OnGaze);
+                if(!Boolean.GetCorrectButton(button))
+                {
+                    button.Content = "Not me!";
+                }
             }
             
             
@@ -91,16 +99,20 @@ namespace WpfApp2
             {
                 if (button.GetHasGaze())
                 {
-                    button.BorderBrush = Brushes.Red;
-                    object test = button.Template.FindName("Ellipse", button);
-
-                    Color.SetCustomStroke(button, Brushes.Red);
+                    //setBorders
+                    button.BorderBrush = Brushes.Blue;
+                    Color.SetCustomStroke(button, Brushes.Blue);
+                    
+                    //startFadeAnimation
                     ButtonAnimation.startAnimation(button);
                 }
                 else
                 {
-                    Color.SetCustomStroke(button, Brushes.Black);
+                    //setBorders
                     button.BorderBrush = Brushes.Black;
+                    Color.SetCustomStroke(button, Brushes.Black);
+
+                    //stopFadeAnimation
                     ButtonAnimation.stopAnimation();
                 }
             }
@@ -113,9 +125,24 @@ namespace WpfApp2
 
     }
 
+    class ImageDisplay
+    {
+        public static Image image;
+        public static Image imageKorrekt;
+        public static Image imageFalsch;
+        public static void setCorrectImage()
+        {
+            image.Source = imageKorrekt.Source;
+        }
+        internal static void setWrongImage()
+        {
+            image.Source = imageFalsch.Source;
+        }
+    }
+
     class ButtonAnimation
     {
-        public static int AnimationSekunden = 2;
+        public static float AnimationSekunden = 0.7f;
         public static int Frames = 24;
 
         private static Button button;
@@ -126,19 +153,19 @@ namespace WpfApp2
             {
                 stopAnimation();
             }
+
+            button.Background = Brushes.Transparent;
             Color.SetCustomBackground(button, Brushes.Transparent);
             ButtonAnimation.button = button;
-            
         }
 
         public static void stopAnimation()
         {
             if (ButtonAnimation.button != null)
             {
+                ButtonAnimation.button.Background = Brushes.Transparent;
                 Color.SetCustomBackground(ButtonAnimation.button, Brushes.Transparent);
                 ButtonAnimation.button = null;
-
-
             }
         }
 
@@ -146,15 +173,31 @@ namespace WpfApp2
         {
             if (button != null)
             {
-                SolidColorBrush currentColor = Color.GetCustomBackground(button);
+                //SolidColorBrush currentColor = Color.GetCustomBackground(button);
+                SolidColorBrush currentColor = (SolidColorBrush)button.Background;
                 System.Windows.Media.Color newColor = currentColor.Color;
 
                 if (newColor.A >= 250)
                 {
-                    newColor.R = 0;
-                    newColor.G = 255;
-                    newColor.B = 0;
-                    newColor.A = 255;
+                    if (Boolean.GetCorrectButton(button))
+                    {
+                        newColor.R = 0;
+                        newColor.G = 255;
+                        newColor.B = 0;
+                        newColor.A = 255;
+                        button.BorderBrush = Brushes.Green;
+                        Color.SetCustomStroke(button, Brushes.Green);
+                        ImageDisplay.setCorrectImage();
+                    } else
+                    {
+                        newColor.R = 255;
+                        newColor.G = 0;
+                        newColor.B = 0;
+                        newColor.A = 255;
+                        button.BorderBrush = Brushes.Red;
+                        Color.SetCustomStroke(button, Brushes.Red);
+                        ImageDisplay.setWrongImage();
+                    }
                     button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }
                 else
@@ -165,6 +208,7 @@ namespace WpfApp2
                     newColor.A += (byte)(255 / (AnimationSekunden * Frames));
                 }
                 Color.SetCustomBackground(button, new SolidColorBrush(newColor));
+                button.Background = new SolidColorBrush(newColor);
             }
         }
 
@@ -205,6 +249,23 @@ namespace WpfApp2
         public static SolidColorBrush GetCustomBackground(DependencyObject obj)
         {
             return (SolidColorBrush)obj.GetValue(CustomBackgroundProperty);
+        }
+    }
+
+    public class Boolean : DependencyObject
+    {
+        private static readonly DependencyProperty CorrectButtonProperty =
+            DependencyProperty.RegisterAttached("CorrectButton", typeof(bool), typeof(Boolean),
+                new PropertyMetadata(null));
+
+        public static void SetCorrectButton(DependencyObject obj, bool correct)
+        {
+            obj.SetValue(CorrectButtonProperty, correct);
+        }
+
+        public static bool GetCorrectButton(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(CorrectButtonProperty);
         }
     }
 }
