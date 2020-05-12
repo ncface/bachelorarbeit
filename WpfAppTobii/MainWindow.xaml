@@ -1,0 +1,429 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tobii="clr-namespace:Tobii.Interaction.Wpf;assembly=Tobii.Interaction.Net"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="MainWindow">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Grid>
+                <Ellipse tobii:Behaviors.IsGazeAware="True" >
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Margin" Value="5 5 5 5"/>
+                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(local:Color.CustomStroke)}" />
+                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(local:Color.CustomBackground)}" />
+                        </Style>
+
+                    </Ellipse.Style>
+                </Ellipse>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(local:Color.CustomBackground)}" />
+            <Setter Property="Margin" Value="5 5 5 5"/>
+            <Style.Triggers>
+                <Trigger Property="tobii:Behaviors.HasGaze" Value="True">
+                    <Setter Property="Background" Value="LightGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button1"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button2"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button3"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button4"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button5"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button6"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button7"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"
+                    x:Name="Button8"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button9"
+                    Content="Look at me" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1">
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button10"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button11"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                    <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button12"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button13"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button14"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button15"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+            <StackPanel>
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button16"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button17"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+                <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button18"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Height="50"
+                    Style="{StaticResource ButtonStyle}"
+                />
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2">
+            <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button19"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Height="100"
+                    Style="{StaticResource ButtonStyle}"
+            />
+            <Button tobii:Behaviors.IsGazeAware="True"  
+                    x:Name="Button20"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Height="100"
+                    Style="{StaticResource ButtonStyle}"
+            />
+            <Button tobii:Behaviors.IsGazeAware="True" 
+                    x:Name="Button21"
+                    Content="Look at me"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Height="100"
+                    Style="{StaticResource ButtonStyle}"
+            />
+        </StackPanel>
+    
+    
+    
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button 
+                    x:Name="Button22"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button23"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button24"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  
+                    x:Name="Button25"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button26"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button27"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  
+                    x:Name="Button28"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button29"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+                <Button  
+                    x:Name="Button30"
+                    Width="50" 
+                    Height="50" 
+                    Content="Click me!" 
+                    Click="Button_Click"
+                    Template="{StaticResource ButtonTemplate}"
+                    local:Color.CustomStroke="Black"
+                    local:Color.CustomBackground="Transparent"
+                    tobii:Behaviors.IsGazeAware="True"  
+                />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+            <Button 
+                x:Name="Button31"
+                Width="100" 
+                Height="100" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"  
+            />
+            <Button 
+                x:Name="Button32"
+                Width="100" 
+                Height="100" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"  
+            />
+            <Button 
+                x:Name="Button33"
+                Width="100" 
+                Height="100" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"  
+            />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2">
+            <Button
+                x:Name="Button34"
+                Width="150" 
+                Height="150" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"  
+            />
+            <Button
+                x:Name="Button35"
+                Width="150" 
+                Height="150" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"  
+            />
+            <Button
+                x:Name="Button36"
+                Width="150" 
+                Height="150" 
+                Content="Click me!" 
+                Click="Button_Click"
+                Template="{StaticResource ButtonTemplate}"
+                local:Color.CustomStroke="Black"
+                local:Color.CustomBackground="Transparent"
+                tobii:Behaviors.IsGazeAware="True"
+            />
+        </StackPanel>
+
+    </Grid>
+</Window>
+    
+    
