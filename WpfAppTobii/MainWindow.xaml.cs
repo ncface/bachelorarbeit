@@ -2,20 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
+using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Tobii.Interaction;
 using Tobii.Interaction.Wpf;
 
 namespace WpfApp2
@@ -25,7 +18,12 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Stopwatch stopWatch = new Stopwatch();
         
+        //static, weil von anderer klasse zugegriffen wird
+        public static int ErrorCount;
+
 
         public MainWindow()
         {
@@ -38,6 +36,11 @@ namespace WpfApp2
             ImageDisplay.image = Image;
             ImageDisplay.imageKorrekt = ImageKorekt;
             ImageDisplay.imageFalsch = ImageFalsch;
+
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(clockRefresh);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
+            dispatcherTimer.Start();
         }
         private void addGazeHandlerToButtons()
         {
@@ -84,6 +87,9 @@ namespace WpfApp2
                 if(!Boolean.GetCorrectButton(button))
                 {
                     button.Content = "Not me!";
+                } else
+                {
+                    button.Click += Button_Click;
                 }
             }
             
@@ -100,8 +106,8 @@ namespace WpfApp2
                 if (button.GetHasGaze())
                 {
                     //setBorders
-                    button.BorderBrush = Brushes.Blue;
-                    Color.SetCustomStroke(button, Brushes.Blue);
+                    button.BorderBrush = Brushes.Black;
+                    Color.SetCustomStroke(button, Brushes.Black);
                     
                     //startFadeAnimation
                     ButtonAnimation.startAnimation(button);
@@ -109,8 +115,8 @@ namespace WpfApp2
                 else
                 {
                     //setBorders
-                    button.BorderBrush = Brushes.Black;
-                    Color.SetCustomStroke(button, Brushes.Black);
+                    button.BorderBrush = Brushes.Transparent;
+                    Color.SetCustomStroke(button, Brushes.Transparent);
 
                     //stopFadeAnimation
                     ButtonAnimation.stopAnimation();
@@ -120,9 +126,36 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Click");
+            Debug.WriteLine("TEST");
+            Button_ClockStop(sender, e);
         }
 
+        private void Button_ClockStart(object sender, RoutedEventArgs e)
+        {
+            stopWatch.Start();
+        }
+        private void Button_ClockStop(object sender, RoutedEventArgs e)
+        {
+            stopWatch.Stop();
+        }
+        private void Button_ClockReset(object sender, RoutedEventArgs e)
+        {
+            stopWatch.Reset();
+            ErrorCount = 0;
+        }
+        
+        void clockRefresh(object sender, EventArgs e)
+        {
+            TimeSpan ts = stopWatch.Elapsed;
+
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10);
+            clock.Text = elapsedTime;
+
+            errors.Text = ErrorCount.ToString();
+        }
+        
     }
 
     class ImageDisplay
@@ -142,7 +175,7 @@ namespace WpfApp2
 
     class ButtonAnimation
     {
-        public static float AnimationSekunden = 0.7f;
+        public static float AnimationSekunden = 1f;
         public static int Frames = 24;
 
         private static Button button;
@@ -163,12 +196,13 @@ namespace WpfApp2
         {
             if (ButtonAnimation.button != null)
             {
-                ButtonAnimation.button.Background = Brushes.Transparent;
-                Color.SetCustomBackground(ButtonAnimation.button, Brushes.Transparent);
+                ButtonAnimation.button.Background = Brushes.LightGray;
+                Color.SetCustomBackground(ButtonAnimation.button, Brushes.LightGray);
                 ButtonAnimation.button = null;
             }
         }
 
+        //[MethodImpl(MethodImplOptions.Synchronized)]
         public static void animationStep(object sender, EventArgs e)
         {
             if (button != null)
@@ -177,7 +211,11 @@ namespace WpfApp2
                 SolidColorBrush currentColor = (SolidColorBrush)button.Background;
                 System.Windows.Media.Color newColor = currentColor.Color;
 
-                if (newColor.A >= 250)
+                if(newColor.A == 255)
+                {
+                    //noting
+                }
+                else if (newColor.A >= 250)
                 {
                     if (Boolean.GetCorrectButton(button))
                     {
@@ -188,6 +226,8 @@ namespace WpfApp2
                         button.BorderBrush = Brushes.Green;
                         Color.SetCustomStroke(button, Brushes.Green);
                         ImageDisplay.setCorrectImage();
+                        button.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                        
                     } else
                     {
                         newColor.R = 255;
@@ -197,6 +237,7 @@ namespace WpfApp2
                         button.BorderBrush = Brushes.Red;
                         Color.SetCustomStroke(button, Brushes.Red);
                         ImageDisplay.setWrongImage();
+                        MainWindow.ErrorCount++;
                     }
                     button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }
@@ -210,6 +251,11 @@ namespace WpfApp2
                 Color.SetCustomBackground(button, new SolidColorBrush(newColor));
                 button.Background = new SolidColorBrush(newColor);
             }
+        }
+
+        private static void Button_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         internal static void initAnimation()
