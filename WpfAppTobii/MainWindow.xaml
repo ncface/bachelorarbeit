@@ -6,7 +6,7 @@
         xmlns:tobii="clr-namespace:Tobii.Interaction.Wpf;assembly=Tobii.Interaction.Net"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow" Height="600">
 
     <Window.Resources>
         <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
